@@ -207,32 +207,6 @@ vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent File
 vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = 'Search Commands' })
 vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Find existing buffers' })
 
--- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
-vim.api.nvim_create_autocmd('LspAttach', {
-	group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
-	callback = function(event)
-		local buf = event.buf
-
-		-- Find references for the word under your cursor.
-		vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
-
-		-- Jump to the implementation of the word under your cursor.
-		vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = 'Goto Implementation' })
-
-		-- Jump to the definition of the word under your cursor.
-		vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
-
-		-- Fuzzy find all the symbols in your current document.
-		vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-
-		-- Fuzzy find all the symbols in your current workspace.
-		vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
-
-		-- Jump to the type of the word under your cursor.
-		vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = 'Goto Type Definition' })
-	end,
-})
-
 vim.keymap.set('n', '<leader>/', function()
 	builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
 		winblend = 10,
