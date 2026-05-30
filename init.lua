@@ -6,7 +6,6 @@ vim.g.have_nerd_font = true
 
 vim.wo.signcolumn = 'yes'
 
-vim.o.number = true
 vim.o.relativenumber = true
 vim.o.mouse = 'a'
 vim.o.showmode = false
@@ -38,6 +37,7 @@ vim.o.splitright = true
 vim.o.signcolumn = 'yes'
 vim.o.backup = false
 vim.o.writebackup = false
+vim.o.swapfile = false
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -82,13 +82,12 @@ vim.keymap.set('v', 'p', '"_dP', { desc = 'Keep last yanked when pasting' })
 vim.api.nvim_create_autocmd('TextYankPost', {
 	desc = 'Highlight when yanking text',
 	group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-	callback = function() 
+	callback = function()
 		vim.hl.on_yank()
 	end,
 })
 
 local function gh(repo) return 'https://github.com/' .. repo end
-
 
 local telescope_plugins = {
 	gh 'nvim-lua/plenary.nvim',
@@ -96,14 +95,14 @@ local telescope_plugins = {
 	gh 'nvim-telescope/telescope-ui-select.nvim',
 }
 
-vim.pack.add({ 
+vim.pack.add({
 	gh 'stevearc/oil.nvim',
 	gh 'nvim-tree/nvim-web-devicons',
 	gh 'nvim-mini/mini.nvim',
-	{ 
-		src = gh 'nvim-treesitter/nvim-treesitter', 
-		version = 'main' 
-	}, 
+	{
+		src = gh 'nvim-treesitter/nvim-treesitter',
+		version = 'main'
+	},
 })
 
 vim.pack.add(telescope_plugins)
@@ -116,18 +115,18 @@ require("mini.statusline").setup({
 })
 
 -- Ensure basic parsers are installed
-require('nvim-treesitter').install({	
-	'bash',	
-	'c',	
-	'diff',	
-	'html',	
-	'lua',	
-	'luadoc',	
-	'markdown',	
-	'markdown_inline',	
-	'query',	
-	'vim',	
-	'vimdoc' 
+require('nvim-treesitter').install({
+	'bash',
+	'c',
+	'diff',
+	'html',
+	'lua',
+	'luadoc',
+	'markdown',
+	'markdown_inline',
+	'query',
+	'vim',
+	'vimdoc'
 })
 
 local function treesitter_try_attach(buf, language)
@@ -168,8 +167,8 @@ vim.api.nvim_create_autocmd('FileType', {
 	end,
 })
 
-if vim.fn.executable 'make' == 1 then 
-	table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') 
+if vim.fn.executable 'make' == 1 then
+	table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim')
 end
 
 require('telescope').setup {
