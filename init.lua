@@ -56,10 +56,10 @@ vim.keymap.set('n', '<Down>', ':resize +2<CR>', { desc = 'Increase height of win
 vim.keymap.set('n', '<Right>', ':vertical resize -2<CR>', { desc = 'Decrease width of window'})
 vim.keymap.set('n', '<Left>', ':vertical resize +2<CR>', { desc = 'Increase width of window' })
 
-vim.keymap.set('n', '<leader>to', ':tabnew<CR>', { desc = 'Open new tab' })
-vim.keymap.set('n', '<leader>tx', ':tabclose<CR>', { desc = 'Close current tab' })
-vim.keymap.set('n', '<leader>tn', ':tabn<CR>', { desc = 'Go to next tab' })
-vim.keymap.set('n', '<leader>tp', ':tabp<CR>', { desc = 'Go to previous tab' })
+vim.keymap.set('n', '<Tab>', ':bnext<CR>', { desc = 'Switch to next buffer' })
+vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', { desc = 'Switch to previous buffer' })
+vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Close current buffer' })
+vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open new buffer' })
 
 vim.keymap.set('n', '<leader>v', '<C-w>v', { desc = 'Split window vertically' })
 vim.keymap.set('n', '<leader>h', '<C-w>s', { desc = 'Split window horizontailly' })
