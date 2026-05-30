@@ -178,9 +178,13 @@ require('telescope').setup {
 	--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
 	--   },
 	-- },
-	-- pickers = {}
+	pickers = {
+		find_files = {
+			file_ignore_patterns = { 'node_modules', '.git', 'bin', 'obj', '.vs' },
+		}
+	},
 	extensions = {
-	  ['ui-select'] = { require('telescope.themes').get_dropdown() },
+		['ui-select'] = { require('telescope.themes').get_dropdown() },
 	},
 }
 
