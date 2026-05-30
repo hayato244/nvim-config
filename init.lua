@@ -62,7 +62,7 @@ vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Close current buffer'
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open new buffer' })
 
 vim.keymap.set('n', '<leader>v', '<C-w>v', { desc = 'Split window vertically' })
-vim.keymap.set('n', '<leader>h', '<C-w>s', { desc = 'Split window horizontailly' })
+vim.keymap.set('n', '<leader>h', '<C-w>s', { desc = 'Split window horizontally' })
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make split windows equal in width and height' })
 vim.keymap.set('n', '<leader>xs', ':close<CR>', { desc = 'Close current window' })
 
@@ -190,17 +190,17 @@ pcall(require('telescope').load_extension, 'ui-select')
 
 local builtin = require 'telescope.builtin'
 
-vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
-vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
+vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = 'Search Files' })
+vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = 'Search Select Telescope' })
+vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = 'Search current Word' })
+vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by Grep' })
+vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search Diagnostics' })
+vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search Resume' })
+vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
+vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = 'Search Commands' })
+vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Find existing buffers' })
 
 -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -209,13 +209,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		local buf = event.buf
 
 		-- Find references for the word under your cursor.
-		vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+		vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
 
 		-- Jump to the implementation of the word under your cursor.
-		vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+		vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = 'Goto Implementation' })
 
 		-- Jump to the definition of the word under your cursor.
-		vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+		vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
 
 		-- Fuzzy find all the symbols in your current document.
 		vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
@@ -224,7 +224,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
 
 		-- Jump to the type of the word under your cursor.
-		vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+		vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = 'Goto Type Definition' })
 	end,
 })
 
@@ -233,14 +233,14 @@ vim.keymap.set('n', '<leader>/', function()
 		winblend = 10,
 		previewer = false,
 	})
-end, { desc = '[/] Fuzzily search in current buffer' })
+end, { desc = 'Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>s/', function()
 	builtin.live_grep {
 		grep_open_files = true,
 		prompt_title = 'Live Grep in Open Files',
 	}
-end, { desc = '[S]earch [/] in Open Files' })
+end, { desc = 'Search in Open Files' })
 
 -- Shortcut for searching your Neovim configuration files
-vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'Search Neovim files' })
