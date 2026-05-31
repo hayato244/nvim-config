@@ -102,7 +102,21 @@ vim.pack.add({
 	gh 'ibhagwan/fzf-lua'
 })
 
-require("oil").setup({})
+require("oil").setup({
+	default_file_explorer = true,
+	delete_to_trash = false,
+	skip_confirm_for_simple_edits = true,
+	view_options = {
+		show_hidden = true,
+		natural_order = 'fast',
+		is_always_hidden = function(name, _)
+			return name == '..' or name '.git'
+		end,
+		is_hidden_file = function(name, _)
+			return name:match('^%.') ~= nil
+		end,
+	},
+})
 
 require("mini.statusline").setup({
 	use_icons = vim.g.have_nerd_font,
