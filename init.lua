@@ -89,12 +89,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 local function gh(repo) return 'https://github.com/' .. repo end
 
-local telescope_plugins = {
-	gh 'nvim-lua/plenary.nvim',
-	gh 'nvim-telescope/telescope.nvim',
-	gh 'nvim-telescope/telescope-ui-select.nvim',
-}
-
 vim.pack.add({
 	gh 'stevearc/oil.nvim',
 	gh 'nvim-tree/nvim-web-devicons',
@@ -104,10 +98,9 @@ vim.pack.add({
 		version = 'main'
 	},
 	gh 'lewis6991/gitsigns.nvim',
-	gh 'stevearc/conform.nvim'
+	gh 'stevearc/conform.nvim',
+	gh 'ibhagwan/fzf-lua'
 })
-
-vim.pack.add(telescope_plugins)
 
 require("oil").setup({})
 
@@ -169,61 +162,6 @@ vim.api.nvim_create_autocmd('FileType', {
 	end,
 })
 
-if vim.fn.executable 'make' == 1 then
-	table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim')
-end
-
-require('telescope').setup {
-	-- defaults = {
-	--   mappings = {
-	--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-	--   },
-	-- },
-	pickers = {
-		find_files = {
-			file_ignore_patterns = { 'node_modules', '.git', 'bin', 'obj', '.vs' },
-		}
-	},
-	extensions = {
-		['ui-select'] = { require('telescope.themes').get_dropdown() },
-	},
-}
-
--- Enable Telescope extensions if they are installed
-pcall(require('telescope').load_extension, 'fzf')
-pcall(require('telescope').load_extension, 'ui-select')
-
-local builtin = require 'telescope.builtin'
-
-vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Search Help' })
-vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
-vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = 'Search Files' })
-vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = 'Search Select Telescope' })
-vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = 'Search current Word' })
-vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by Grep' })
-vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search Diagnostics' })
-vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search Resume' })
-vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
-vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = 'Search Commands' })
-vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Find existing buffers' })
-
-vim.keymap.set('n', '<leader>/', function()
-	builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-		winblend = 10,
-		previewer = false,
-	})
-end, { desc = 'Fuzzily search in current buffer' })
-
-vim.keymap.set('n', '<leader>s/', function()
-	builtin.live_grep {
-		grep_open_files = true,
-		prompt_title = 'Live Grep in Open Files',
-	}
-end, { desc = 'Search in Open Files' })
-
--- Shortcut for searching your Neovim configuration files
-vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'Search Neovim files' })
-
 require('gitsigns').setup({
 	signs = {
 		add = { text = '+' },
@@ -266,4 +204,16 @@ require('conform').setup {
 vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
 	require('conform').format { async = true }
 end, { desc = 'Format buffer' })
+
+require('fzf-lua').setup({})
+
+vim.keymap.set('n', '<leader>sf', require('fzf-lua').files, { desc = 'Search files' })
+vim.keymap.set('n', '<leader>sk', require('fzf-lua').keymaps, { desc = 'Search keymaps' })
+vim.keymap.set('n', '<leader>sh', require('fzf-lua').helptags, { desc = 'Search help' })
+vim.keymap.set('n', '<leader>sr', require('fzf-lua').resume, { desc = 'Search resume' })
+vim.keymap.set('n', '<leader>sg', require('fzf-lua').live_grep, { desc = 'Search by grep' })
+vim.keymap.set('n', '<leader>sw', require('fzf-lua').grep_cword, { desc = 'Search current word' })
+vim.keymap.set('n', '<leader><leader>', require('fzf-lua').buffers, { desc = 'Find existing buffers' })
+
+vim.keymap.set('n', '<leader>/', require('fzf-lua').blines, { desc = 'Search in current Buffer' })
 
