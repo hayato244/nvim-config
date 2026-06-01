@@ -116,6 +116,7 @@ require("oil").setup({
 			return name:match('^%.') ~= nil
 		end,
 	},
+	use_default_keymaps = true,
 })
 
 require("mini.statusline").setup({
