@@ -51,20 +51,20 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<Up>', ':resize -2<CR>', { desc = 'Decrease height of window' })
-vim.keymap.set('n', '<Down>', ':resize +2<CR>', { desc = 'Increase height of window' })
-vim.keymap.set('n', '<Right>', ':vertical resize -2<CR>', { desc = 'Decrease width of window'})
-vim.keymap.set('n', '<Left>', ':vertical resize +2<CR>', { desc = 'Increase width of window' })
+vim.keymap.set('n', '<Up>', '<cmd>resize -2<CR>', { desc = 'Decrease height of window' })
+vim.keymap.set('n', '<Down>', '<cmd>resize +2<CR>', { desc = 'Increase height of window' })
+vim.keymap.set('n', '<Right>', '<cmd>vertical resize -2<CR>', { desc = 'Decrease width of window'})
+vim.keymap.set('n', '<Left>', '<cmd>vertical resize +2<CR>', { desc = 'Increase width of window' })
 
-vim.keymap.set('n', '<Tab>', ':bnext<CR>', { desc = 'Switch to next buffer' })
-vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', { desc = 'Switch to previous buffer' })
-vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Close current buffer' })
+vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', { desc = 'Switch to next buffer' })
+vim.keymap.set('n', '<S-Tab>', '<cmd>bprevious<CR>', { desc = 'Switch to previous buffer' })
+vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>', { desc = 'Close current buffer' })
 vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'Open new buffer' })
 
 vim.keymap.set('n', '<leader>v', '<C-w>v', { desc = 'Split window vertically' })
 vim.keymap.set('n', '<leader>h', '<C-w>s', { desc = 'Split window horizontally' })
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make split windows equal in width and height' })
-vim.keymap.set('n', '<leader>xs', ':close<CR>', { desc = 'Close current window' })
+vim.keymap.set('n', '<leader>xs', '<cmd>close<CR>', { desc = 'Close current window' })
 
 vim.keymap.set('n', 'x', '"_xm', { desc = 'Delete single character without copying into register' })
 
