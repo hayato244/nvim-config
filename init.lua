@@ -119,6 +119,8 @@ require("oil").setup({
 	use_default_keymaps = true,
 })
 
+vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
+
 require("mini.statusline").setup({
 	use_icons = vim.g.have_nerd_font,
 	section_location = function() return '%2l:%-2v' end,
