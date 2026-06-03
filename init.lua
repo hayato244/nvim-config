@@ -205,6 +205,7 @@ require('conform').setup {
 	formatters_by_ft = {
 		c = { 'clang_format' },
 		go = { 'gofmt', 'goimports' },
+		typescript = { 'prettierd', 'prettier', stop_after_first = true },
 	},
 	formatters = {
 		clang_format = {
