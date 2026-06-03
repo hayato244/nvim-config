@@ -1,5 +1,3 @@
-vim.cmd.colorscheme("habamax")
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
@@ -99,7 +97,8 @@ vim.pack.add({
 	},
 	gh 'lewis6991/gitsigns.nvim',
 	gh 'stevearc/conform.nvim',
-	gh 'ibhagwan/fzf-lua'
+	gh 'ibhagwan/fzf-lua',
+	gh 'vague-theme/vague.nvim'
 })
 
 require("oil").setup({
@@ -229,4 +228,11 @@ vim.keymap.set('n', '<leader>sw', require('fzf-lua').grep_cword, { desc = 'Searc
 vim.keymap.set('n', '<leader><leader>', require('fzf-lua').buffers, { desc = 'Find existing buffers' })
 
 vim.keymap.set('n', '<leader>/', require('fzf-lua').blines, { desc = 'Search in current Buffer' })
+
+require('vague').setup({
+	bold = false,
+	italic = false,
+})
+
+vim.cmd.colorscheme('vague')
 
