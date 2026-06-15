@@ -17,6 +17,7 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.cursorline = true
 vim.o.scrolloff = 10
+vim.o.sidescrolloff = 10
 vim.o.confirm = true
 vim.o.hlsearch = true
 vim.o.incsearch = true
@@ -36,6 +37,7 @@ vim.o.signcolumn = 'yes'
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
+vim.o.winborder = 'rounded'
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -98,7 +100,9 @@ vim.pack.add({
 	gh 'lewis6991/gitsigns.nvim',
 	gh 'stevearc/conform.nvim',
 	gh 'ibhagwan/fzf-lua',
-	gh 'vague-theme/vague.nvim'
+	gh 'vague-theme/vague.nvim',
+	gh 'mason-org/mason.nvim',
+	gh 'neovim/nvim-lspconfig'
 })
 
 require("oil").setup({
@@ -123,21 +127,6 @@ vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
 require("mini.statusline").setup({
 	use_icons = vim.g.have_nerd_font,
 	section_location = function() return '%2l:%-2v' end,
-})
-
--- Ensure basic parsers are installed
-require('nvim-treesitter').install({
-	'bash',
-	'c',
-	'diff',
-	'html',
-	'lua',
-	'luadoc',
-	'markdown',
-	'markdown_inline',
-	'query',
-	'vim',
-	'vimdoc'
 })
 
 local function treesitter_try_attach(buf, language)
@@ -206,6 +195,9 @@ require('conform').setup {
 		c = { 'clang_format' },
 		go = { 'gofmt', 'goimports' },
 		typescript = { 'prettierd', 'prettier', stop_after_first = true },
+		html = { 'prettierd', 'prettier', stop_after_first = true },
+		css = { 'prettierd', 'prettier', stop_after_first = true },
+		scss = { 'prettierd', 'prettier', stop_after_first = true },
 	},
 	formatters = {
 		clang_format = {
@@ -236,4 +228,24 @@ require('vague').setup({
 })
 
 vim.cmd.colorscheme('vague')
+
+require('mason').setup({})
+
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			diagnostics = { globals = { "vim" } },
+			telemetry = { enable = false },
+		},
+	},
+})
+
+vim.lsp.config("ts_ls", {})
+vim.lsp.config("omnisharp", {})
+
+vim.lsp.enable({
+	"lua_ls",
+	"ts_ls",
+	"omnisharp"
+})
 
