@@ -41,10 +41,10 @@ vim.o.winborder = 'rounded'
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo 'Use h to move!'<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo 'Use l to move!'<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo 'Use k to move!'<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo 'Use j to move!'<CR>')
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -66,7 +66,7 @@ vim.keymap.set('n', '<leader>h', '<C-w>s', { desc = 'Split window horizontally' 
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make split windows equal in width and height' })
 vim.keymap.set('n', '<leader>xs', '<cmd>close<CR>', { desc = 'Close current window' })
 
-vim.keymap.set('n', 'x', '"_xm', { desc = 'Delete single character without copying into register' })
+vim.keymap.set('n', 'x', ''_xm', { desc = 'Delete single character without copying into register' })
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Vertical scroll and center' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Vertical scroll and center' })
@@ -77,15 +77,7 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Find and center' })
 vim.keymap.set('v', '<', '<gv', { desc = 'Stay in visual mode after indenting' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Stay in visual mode after indenting' })
 
-vim.keymap.set('v', 'p', '"_dP', { desc = 'Keep last yanked when pasting' })
-
-vim.api.nvim_create_autocmd('TextYankPost', {
-	desc = 'Highlight when yanking text',
-	group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
-})
+vim.keymap.set('v', 'p', ''_dP', { desc = 'Keep last yanked when pasting' })
 
 local function gh(repo) return 'https://github.com/' .. repo end
 
@@ -105,7 +97,7 @@ vim.pack.add({
 	gh 'neovim/nvim-lspconfig'
 })
 
-require("oil").setup({
+require('oil').setup({
 	default_file_explorer = true,
 	delete_to_trash = false,
 	skip_confirm_for_simple_edits = true,
@@ -124,7 +116,7 @@ require("oil").setup({
 
 vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
 
-require("mini.statusline").setup({
+require('mini.statusline').setup({
 	use_icons = vim.g.have_nerd_font,
 	section_location = function() return '%2l:%-2v' end,
 })
@@ -140,32 +132,11 @@ local function treesitter_try_attach(buf, language)
 	local has_indent_query = vim.treesitter.query.get(language, 'indents') ~= nil
 
 	-- Enable treesitter based indentation
-	if has_indent_query then vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
+	if has_indent_query then vim.bo.indentexpr = 'v:lua.require'nvim-treesitter'.indentexpr()' end
 end
 
 local available_parsers = require('nvim-treesitter').get_available()
 
-vim.api.nvim_create_autocmd('FileType', {
-	callback = function(args)
-		local buf, filetype = args.buf, args.match
-
-		local language = vim.treesitter.language.get_lang(filetype)
-		if not language then return end
-
-		local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
-
-		if vim.tbl_contains(installed_parsers, language) then
-			-- Enable the parser if it is already installed
-			treesitter_try_attach(buf, language)
-		elseif vim.tbl_contains(available_parsers, language) then
-			-- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
-			require('nvim-treesitter').install(language):await(function() treesitter_try_attach(buf, language) end)
-		else
-			-- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
-			treesitter_try_attach(buf, language)
-		end
-	end,
-})
 
 require('gitsigns').setup({
 	signs = {
@@ -229,23 +200,104 @@ require('vague').setup({
 
 vim.cmd.colorscheme('vague')
 
+require('fzf-lua').setup({})
 require('mason').setup({})
 
-vim.lsp.config("lua_ls", {
+vim.lsp.config('lua_ls', {
 	settings = {
 		Lua = {
-			diagnostics = { globals = { "vim" } },
-			telemetry = { enable = false },
+			diagnostics = { globals = { 'vim' } },
+			telemetery = { enable = false }
 		},
 	},
 })
 
-vim.lsp.config("ts_ls", {})
-vim.lsp.config("omnisharp", {})
+vim.lsp.config('ts_ls', {})
+vim.lsp.config('omnisharp', {})
+vim.lsp.config('clangd', {})
+vim.lsp.config('gopls', {})
 
 vim.lsp.enable({
-	"lua_ls",
-	"ts_ls",
-	"omnisharp"
+	'lua_ls',
+	'ts_ls',
+	'omnisharp',
+	'clangd',
+	'gopls'
+})
+
+vim.diagnostic.config {
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+		border = 'rounded',
+		source = true,
+	},
+    virtual_text = {
+		current_line = true
+	},
+	underline = true,
+    jump = {
+      on_jump = function(_, bufnr)
+        vim.diagnostic.open_float {
+          bufnr = bufnr,
+          scope = 'cursor',
+          focus = false,
+        }
+      end,
+    },
+}
+
+local group = vim.api.nvim_create_augroup('user-config', { clear = true })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+	desc = 'Highlight when yanking text',
+	group = group,
+	callback = function()
+		vim.hl.on_yank()
+	end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+	group = group,
+	callback = function(args)
+		local buf, filetype = args.buf, args.match
+
+		local language = vim.treesitter.language.get_lang(filetype)
+		if not language then return end
+
+		local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
+
+		if vim.tbl_contains(installed_parsers, language) then
+			-- Enable the parser if it is already installed
+			treesitter_try_attach(buf, language)
+		elseif vim.tbl_contains(available_parsers, language) then
+			-- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
+			require('nvim-treesitter').install(language):await(function() treesitter_try_attach(buf, language) end)
+		else
+			-- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
+			treesitter_try_attach(buf, language)
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd('LspAttach',  {
+	group = group,
+	callback = function(env)
+		local bufnr = env.buf
+
+		local opts = {
+			noremap = true,
+			silent = true,
+			buffer = bufnr
+		}
+
+		vim.keymap.set('n', '<leader>d', function()
+			vim.diagnostic.open_float({ scope = 'cursor' })
+		end, opts)
+
+		vim.keymap.set('n', '<leader>D', function()
+			vim.diagnostic.open_float({ scope = 'line' })
+		end, opts)
+	end
 })
 
