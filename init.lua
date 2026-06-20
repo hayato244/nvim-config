@@ -41,10 +41,10 @@ vim.o.winborder = 'rounded'
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<left>', '<cmd>echo 'Use h to move!'<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo 'Use l to move!'<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo 'Use k to move!'<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo 'Use j to move!'<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!"<CR>')
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -66,7 +66,7 @@ vim.keymap.set('n', '<leader>h', '<C-w>s', { desc = 'Split window horizontally' 
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make split windows equal in width and height' })
 vim.keymap.set('n', '<leader>xs', '<cmd>close<CR>', { desc = 'Close current window' })
 
-vim.keymap.set('n', 'x', ''_xm', { desc = 'Delete single character without copying into register' })
+vim.keymap.set('n', 'x', '"_xm', { desc = 'Delete single character without copying into register' })
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Vertical scroll and center' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Vertical scroll and center' })
@@ -77,7 +77,7 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Find and center' })
 vim.keymap.set('v', '<', '<gv', { desc = 'Stay in visual mode after indenting' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Stay in visual mode after indenting' })
 
-vim.keymap.set('v', 'p', ''_dP', { desc = 'Keep last yanked when pasting' })
+vim.keymap.set('v', 'p', '"_dP', { desc = 'Keep last yanked when pasting' })
 
 local function gh(repo) return 'https://github.com/' .. repo end
 
@@ -132,7 +132,7 @@ local function treesitter_try_attach(buf, language)
 	local has_indent_query = vim.treesitter.query.get(language, 'indents') ~= nil
 
 	-- Enable treesitter based indentation
-	if has_indent_query then vim.bo.indentexpr = 'v:lua.require'nvim-treesitter'.indentexpr()' end
+	if has_indent_query then vim.bo.indentexpr = 'v:lua.require"nvim-treesitter".indentexpr()' end
 end
 
 local available_parsers = require('nvim-treesitter').get_available()
