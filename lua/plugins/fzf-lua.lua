@@ -1,0 +1,10 @@
+require('fzf-lua').setup({})
+
+vim.keymap.set('n', '<leader>sf', require('fzf-lua').files, { desc = 'Search files' })
+vim.keymap.set('n', '<leader>sk', require('fzf-lua').keymaps, { desc = 'Search keymaps' })
+vim.keymap.set('n', '<leader>sh', require('fzf-lua').helptags, { desc = 'Search help' })
+vim.keymap.set('n', '<leader>sr', require('fzf-lua').resume, { desc = 'Search resume' })
+vim.keymap.set('n', '<leader>sg', require('fzf-lua').live_grep, { desc = 'Search by grep' })
+vim.keymap.set('n', '<leader>sw', require('fzf-lua').grep_cword, { desc = 'Search current word' })
+vim.keymap.set('n', '<leader><leader>', require('fzf-lua').buffers, { desc = 'Find existing buffers' })
+vim.keymap.set('n', '<leader>/', require('fzf-lua').blines, { desc = 'Search in current Buffer' })
