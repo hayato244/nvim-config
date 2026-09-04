@@ -85,6 +85,12 @@ vim.pack.add({
 	gh 'stevearc/oil.nvim',
 	gh 'nvim-tree/nvim-web-devicons',
 	gh 'nvim-mini/mini.nvim',
+	gh 'nvim-lualine/lualine.nvim',
+	gh 'j-hui/fidget.nvim',
+	{
+		src = gh 'saghen/blink.cmp',
+		version = vim.version.range '1.*'
+	},
 	{
 		src = gh 'nvim-treesitter/nvim-treesitter',
 		version = 'main'
@@ -116,9 +122,24 @@ require('oil').setup({
 
 vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
 
-require('mini.statusline').setup({
-	use_icons = vim.g.have_nerd_font,
-	section_location = function() return '%2l:%-2v' end,
+require('lualine').setup({})
+
+require('fidget').setup({})
+
+require('blink.cmp').setup({
+	keymap = {
+		preset = 'default',
+	},
+	appearance = {
+		nerd_font_variant = 'mono',
+	},
+	sources = {
+		default = {
+			'lsp',
+			'path',
+		},
+	},
+	signature = { enabled = true },
 })
 
 local function treesitter_try_attach(buf, language)
@@ -165,10 +186,11 @@ require('conform').setup {
 	formatters_by_ft = {
 		c = { 'clang_format' },
 		go = { 'gofmt', 'goimports' },
-		typescript = { 'prettierd', 'prettier', stop_after_first = true },
-		html = { 'prettierd', 'prettier', stop_after_first = true },
-		css = { 'prettierd', 'prettier', stop_after_first = true },
-		scss = { 'prettierd', 'prettier', stop_after_first = true },
+		typescript = { 'prettier', stop_after_first = true },
+		html = { 'prettier', stop_after_first = true },
+		htmlangular = { 'prettier', stop_after_first = true },
+		css = { 'prettier', stop_after_first = true },
+		scss = { 'prettier', stop_after_first = true },
 	},
 	formatters = {
 		clang_format = {
@@ -216,13 +238,15 @@ vim.lsp.config('ts_ls', {})
 vim.lsp.config('omnisharp', {})
 vim.lsp.config('clangd', {})
 vim.lsp.config('gopls', {})
+vim.lsp.config('angularls', {})
 
 vim.lsp.enable({
 	'lua_ls',
 	'ts_ls',
 	'omnisharp',
 	'clangd',
-	'gopls'
+	'gopls',
+	'angularls',
 })
 
 vim.diagnostic.config {
