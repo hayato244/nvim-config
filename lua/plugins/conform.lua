@@ -2,8 +2,7 @@ require('conform').setup {
 	notify_on_error = true,
 	format_on_save = function(bufnr)
 		local enabled_filetypes = {
-			-- lua = true,
-			-- python = true,
+			lua = true,
 		}
 
 		if enabled_filetypes[vim.bo[bufnr].filetype] then

@@ -1,3 +1,6 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!"<CR>')
@@ -37,3 +40,8 @@ vim.keymap.set('v', '<', '<gv', { desc = 'Stay in visual mode after indenting' }
 vim.keymap.set('v', '>', '>gv', { desc = 'Stay in visual mode after indenting' })
 
 vim.keymap.set('v', 'p', '"_dP', { desc = 'Keep last yanked when pasting' })
+
+vim.keymap.set('n', '<leader>qo', '<cmd>copen<CR>', { desc = 'Open quickfix' })
+vim.keymap.set('n', '<leader>qc', '<cmd>cclose<CR>', { desc = 'Close quickfix' })
+vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>', { desc = 'Next quickfix entry' })
+vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>', { desc = 'Previous quickfix entry' })
